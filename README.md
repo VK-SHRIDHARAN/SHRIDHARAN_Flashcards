@@ -2,9 +2,8 @@
 
 - **Frontend only**
   - This repo contains only the frontend.
-  - All data comes from HTTP APIs provided by another team (auth, lessons, progress, etc.).
 - **Language & runtime**
-  - React with **TSX** (TypeScript + JSX).
+  - React with **TSX**.
   - Node + **npm** as the package manager.
   - **Next.js App Router** for file-based routing (automatic route generation).
 - **Styling**
@@ -141,7 +140,7 @@ Follow these naming conventions:
 
 # 10. Layout & Responsiveness
 
-Global pattern: Use **flexbox for all layout**. Follow **mobile-first** approach with `md:` responsive overrides.
+Global pattern: Use **flexbox for all layout**.
 
 Key guidelines:
 - Use `flex`, `flex-col`, `flex-row`, `items-*`, `justify-*`, `gap-*` utilities
