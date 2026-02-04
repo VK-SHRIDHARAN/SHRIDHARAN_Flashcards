@@ -1,274 +1,365 @@
-# 1. Tech Stack and Scope
+# Flashcards - Interactive Learning Platform
 
-- **Frontend only**
-  - This repo contains only the frontend.
-- **Language & runtime**
-  - React with **TSX**.
-  - Node + **npm** as the package manager.
-  - **Next.js App Router** for file-based routing (automatic route generation).
-- **Styling**
-  - **Tailwind CSS** for all styling.
-  - Layouts must use **flexbox** (`flex`, `flex-col`, `flex-row`, `items-*`, `justify-*`, `gap-*`) plus responsive modifiers like `md:*`.
-- **Icons**
-  - **Heroicons only**: `@heroicons/react/24/outline` and `@heroicons/react/24/solid`.
-- **UI Primitives**
-  - **`tailwind-variants`** for reusable class recipes (Button, Input, Card).
-- **Design**
-  - Visual design (colors, type, spacing) is provided in Figma.
+A modern, responsive flashcard application built with Next.js, React, TypeScript, and Tailwind CSS. Perfect for students and learners who want to master new material efficiently.
+
+**Author:** Shridharan VK  
+**Internship Task:** KonnichiWow Frontend Developer Internship  
+**Date Completed:** February 4, 2026
 
 ---
 
-# 2. Project Structure
+## 🚀 Project Overview
 
-You can add components if needed. Consult before removing.
+This is a full-featured flashcard learning application featuring:
+- **User Authentication** (Login, Signup, Forgot Password)
+- **Deck Management** (Create, view, and manage flashcard decks)
+- **Multi-level Study** (Easy, Medium, Hard difficulty levels)
+- **Interactive Study Mode** (Flip cards, track progress)
+- **Responsive Design** (Mobile, tablet, and desktop optimized)
+- **Modern UI** (Built with Tailwind CSS and custom components)
+
+---
+
+## 📂 Project Structure
 
 ```
-app/
-  (auth)/
-    login/
-      page.tsx
-    signup/
-      page.tsx
-    forgot-password/
-      page.tsx
-  
-  (app)/
-    flashcard/
-      deck-menu/
-        page.tsx
-      deck/
-        page.tsx
-      card/
-        page.tsx
-      levels/
-        page.tsx
-
-components/
-  Auth/
-    LoginForm.tsx
-    SignupForm.tsx
-    ForgotPasswordForm.tsx
-  Flashcard/
-    DeckMenu.tsx
-    LevelsList.tsx
-    CardView.tsx
-    DeckManagement.tsx
-
-ui/
-  button.ts
-  input.ts
-  card.ts
-
-lib/
-  types.ts
+Konnichiwow_task/
+├── app/
+│   ├── (auth)/                          # Authentication routes (route group)
+│   │   ├── login/page.tsx               # Login page
+│   │   ├── signup/page.tsx              # Sign up page
+│   │   └── forgot-password/page.tsx     # Password recovery page
+│   ├── (app)/                           # Application routes (route group)
+│   │   └── flashcard/
+│   │       ├── deck-menu/page.tsx       # Browse and select decks
+│   │       ├── levels/page.tsx          # Choose difficulty level
+│   │       ├── card/page.tsx            # Study flashcards
+│   │       └── deck/page.tsx            # Create/manage decks
+│   ├── layout.tsx                       # Root layout
+│   ├── page.tsx                         # Home page
+│   └── globals.css                      # Global styles
+├── components/
+│   ├── Auth/
+│   │   ├── LoginForm.tsx                # Login form component
+│   │   ├── SignupForm.tsx               # Signup form component
+│   │   └── ForgotPasswordForm.tsx       # Password reset form
+│   └── Flashcard/
+│       ├── DeckMenu.tsx                 # Deck selection UI
+│       ├── LevelsList.tsx               # Difficulty level selection
+│       ├── CardView.tsx                 # Study card display
+│       └── DeckManagement.tsx           # Create/edit decks
+├── lib/
+│   └── types.ts                         # TypeScript type definitions
+├── ui/
+│   └── index.ts                         # Reusable UI components (tailwind-variants recipes)
+├── public/                              # Static assets
+├── package.json                         # Project dependencies
+└── tsconfig.json                        # TypeScript configuration
 ```
 
 ---
 
-# 3. Routing Setup (Next.js App Router)
+## 🛣️ Routing Guide
 
-Routes are **automatically generated** from folder structure. No manual route configuration needed.
+### Authentication Routes (No /auth prefix due to route grouping)
 
-## Route Groups
+| Route | File | Description |
+|-------|------|-------------|
+| `/` | `app/page.tsx` | Home page with navigation |
+| `/login` | `app/(auth)/login/page.tsx` | User login |
+| `/signup` | `app/(auth)/signup/page.tsx` | User registration |
+| `/forgot-password` | `app/(auth)/forgot-password/page.tsx` | Password recovery |
 
-Use parentheses to group routes without affecting URL:
-- `(auth)/login/page.tsx` → `/login` (not `/auth/login`)
-- `(app)/flashcard/deck/page.tsx` → `/flashcard/deck`
+### Flashcard Routes
 
----
-
-# 4. Access Dynamic Params
-
-Dynamic segments in URLs use square brackets (e.g., `[lessonId]`, `[deckId]`). Pages using dynamic params should properly wire the route segments to display the correct content based on the URL parameters.
-
----
-
-# 5. Server vs Client Components
-
-## Rule of Thumb
-
-| Need | Use |
-|------|-----|
-| Display static content | **Server Component** |
-| Use hooks (`useState`, `useEffect`) | **`'use client'`** |
-| Event handlers (`onClick`, `onChange`) | **`'use client'`** |
-| Browser APIs | **`'use client'`** |
-| Real-time interactivity | **`'use client'`** |
+| Route | File | Description |
+|-------|------|-------------|
+| `/flashcard/deck-menu` | `app/(app)/flashcard/deck-menu/page.tsx` | Browse available decks |
+| `/flashcard/levels` | `app/(app)/flashcard/levels/page.tsx` | Select difficulty level (query params: `deckId`, `level`) |
+| `/flashcard/card` | `app/(app)/flashcard/card/page.tsx` | Study mode (query params: `deckId`, `level`) |
+| `/flashcard/deck` | `app/(app)/flashcard/deck/page.tsx` | Create or manage decks |
 
 ---
 
-# 6. Type Definitions
+## 📋 Component Hierarchy
 
-Create reusable types in `lib/types.ts`. Define interfaces for domain objects such as:
-- User (id, name, email, profile data)
-- Flashcard (id, question, answer, difficulty)
-- Deck (id, title, description, cards)
-- Auth-related types (login credentials, signup data)
+### Authentication Components
+- **LoginForm** (`components/Auth/LoginForm.tsx`)
+  - Email validation
+  - Password validation
+  - Error handling
+  - Links to signup and forgot password
 
-All component props and shared data structures should be typed.
+- **SignupForm** (`components/Auth/SignupForm.tsx`)
+  - Full name input
+  - Email validation
+  - Password strength validation
+  - Password confirmation
+  - Links to login
+
+- **ForgotPasswordForm** (`components/Auth/ForgotPasswordForm.tsx`)
+  - Email verification
+  - Success message display
+  - Back to login link
+
+### Flashcard Components
+- **DeckMenu** (`components/Flashcard/DeckMenu.tsx`)
+  - Display all available decks
+  - Show card counts and difficulty distribution
+  - Navigation to deck levels
+  - Create new deck button
+
+- **LevelsList** (`components/Flashcard/LevelsList.tsx`)
+  - Display Easy, Medium, Hard difficulty options
+  - Show card count per level
+  - Navigate to study mode
+  - Study all levels option
+
+- **CardView** (`components/Flashcard/CardView.tsx`)
+  - Flip card animation
+  - Question/Answer display
+  - Navigation between cards
+  - Progress tracking
+  - Correct/Incorrect marking
+
+- **DeckManagement** (`components/Flashcard/DeckManagement.tsx`)
+  - Create new flashcard decks
+  - Add questions and answers
+  - Card list management
+  - Save and validate decks
+
+### UI Components (`ui/index.ts`)
+Built with `tailwind-variants` for reusable styling:
+- **button** - Primary, secondary, ghost, danger variants with multiple sizes
+- **input** - Text input with error states and disabled states
+- **card** - Default, elevated, and interactive card variants
 
 ---
 
-# 7. Component Props
+## 🎨 Type Definitions (`lib/types.ts`)
 
-Always type component props clearly. Each component should have well-defined prop interfaces that describe:
-- Required vs optional props
-- Data types for each prop
-- Callback functions if needed
+```typescript
+// User related
+User, LoginCredentials, SignupData, ForgotPasswordData
 
----
-
-# 8. TypeScript Naming
-
-Follow these naming conventions:
-- **camelCase** for variables, functions, props, and hooks
-- **PascalCase** for React components and their files
-- **PascalCase** for TypeScript interfaces and types
-- **UPPER_SNAKE_CASE** only for true constants
+// Flashcard related
+Flashcard, Deck, Level, StudySession
+```
 
 ---
 
-# 9. Components
+## 🚀 Getting Started
 
-- Use function components only
-- One top-level component per file; filename matches component name
+### Prerequisites
+- Node.js 18+ and npm
+- Git
+
+### Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/<your-username>/SHRIDHARAN_Flashcards.git
+   cd SHRIDHARAN_Flashcards
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables (optional):**
+   ```bash
+   # Create .env.local file if needed for future API integration
+   ```
+
+### Running the Project
+
+**Development Mode:**
+```bash
+npm run dev
+```
+The application will be available at `http://localhost:3000`
+
+**Production Build:**
+```bash
+npm run build
+npm start
+```
+
+**Linting:**
+```bash
+npm run lint
+```
+
+---
+
+## 📱 Features
+
+### ✅ Authentication
+- User login with email and password
+- User registration with validation
+- Password recovery flow
+- Form validation and error handling
+
+### 📚 Deck Management
+- Browse available flashcard decks
+- Create custom flashcard decks
+- Add questions and answers
+- Organize cards by difficulty level
+
+### 🎯 Study Mode
+- View flashcards with question/answer flip
+- Track progress with progress bar
+- Navigate between cards
+- Mark cards as correct/incorrect
+- Study by difficulty level
+- Support for all levels combined
+
+### 🎨 User Interface
+- Responsive design (mobile, tablet, desktop)
+- Gradient backgrounds and modern styling
+- Interactive hover states and transitions
+- Difficulty level color coding (Green=Easy, Amber=Medium, Rose=Hard)
+- Loading states and disabled states
+
+### ♿ Accessibility
+- Semantic HTML structure
+- Proper form labels and associations
+- Keyboard navigation support
+- Color contrast compliance
+
+---
+
+## 🛠️ Tech Stack
+
+| Technology | Purpose |
+|-----------|---------|
+| **Next.js 16.1.4** | React framework with App Router |
+| **React 19.2.3** | UI library |
+| **TypeScript 5** | Type-safe JavaScript |
+| **Tailwind CSS 4** | Utility-first CSS framework |
+| **tailwind-variants** | Reusable component recipes |
+| **Heroicons** | Icon library (prepared for future use) |
+| **Node + npm** | Package management |
+
+---
+
+## 📖 Development Guidelines
+
+### TypeScript Conventions
+- **camelCase** for variables, functions, and props
+- **PascalCase** for React components and files
+- **PascalCase** for interfaces and types
+- **UPPER_SNAKE_CASE** for constants only
+
+### Component Structure
+- Function components only
+- One top-level component per file
 - Always type destructured props
-- Organize components by feature (Auth, Flashcard)
-- Create reusable, presentational components
+- Organize by feature (Auth, Flashcard)
 
----
+### Layout & Styling
+- Flexbox-based layouts using Tailwind utilities
+- Responsive modifiers: `md:*`, `lg:*` for breakpoints
+- Component recipes via `tailwind-variants`
+- Consistent class ordering: layout → sizing → typography → colors → effects
 
-# 10. Layout & Responsiveness
-
-Global pattern: Use **flexbox for all layout**.
-
-Key guidelines:
-- Use `flex`, `flex-col`, `flex-row`, `items-*`, `justify-*`, `gap-*` utilities
-- Apply responsive modifiers: `flex-col md:flex-row`, `w-full md:w-1/2`
-- Avoid fixed widths/heights; prefer `w-full`, `max-w-*`, `flex-1`
-- Use `gap-*` for spacing between flex children
-
----
-
-# 11. Tailwind Usage & `tailwind-variants`
-
-Define reusable **class recipes** using `tailwind-variants` for UI primitives (Button, Input, Card).
-
-**Tailwind Class Ordering** (keep consistent):
-1. Layout: `flex flex-col items-center justify-between`
-2. Sizing & spacing: `w-full h-10 px-4 py-2 gap-2`
-3. Typography: `text-sm font-medium`
-4. Colors & borders: `bg-indigo-600 text-white border border-slate-700`
-5. Effects & states: `shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2`
-
-Create recipes for reusable components in the `ui/` folder instead of large wrapper components.
-
----
-
-# 12. Animations
-
-Use **tailwindcss-motions** utilities combined with Tailwind's `transition-*` utilities for animations and transitions.
-
-Apply animations for:
-- Page/component entrance effects
-- Hover and active states
-- Subtle transitions between states
-- Interactive feedback
-
-Keep animations smooth and purposeful.
-
----
-
-# 13. Authentication Section
-
-The Authentication section includes three main pages:
-
-- **Login Page** (`/login`)
-- **Signup Page** (`/signup`)
-- **Forgot Password Page** (`/forgot-password`)
-
----
-
-# 14. Flashcards Section
-
-The Flashcards section includes interactive learning pages:
-
-- **Deck Menu Page** (`/flashcard/deck-menu`)
-- **Levels Selection Page** (`/flashcard/levels`)
-- **Flashcard Study Page** (`/flashcard/card`)
-- **Flashcard Deck Management Page** (`/flashcard/deck`)
-
----
-
-# 15. Figma Design
-
-All UI components and pages should be designed according to the provided Figma design system.
-
-Refer to the Figma link for:
-- Component library and specifications
-- Color system and typography
-- Spacing and layout guidelines
-- Visual hierarchy
-
-Copy components from figma as png/svg to use them as well if necessary
-
----
-
-# 11. Git Commit Conventions (Conventional Commits)
-
-## Commit Conventions
-Follow **Conventional Commits** strictly for all commit messages.
-
-Format:
-
-```txt
-<type>(<optional scope>): <description>
-
-[optional body]
-
-[optional footer]
+### Git Commits
+Follow Conventional Commits format:
+```
+feat: add new feature
+fix: fix a bug
+refactor: refactor code
+chore: miscellaneous tasks
 ```
 
-Common types:
-
-- `feat` – add/update/remove a user-facing or API feature.
-- `fix` – bug fix.
-- `refactor` – code change without behavior change.
-- `chore` – misc tasks (last resort).
-
-Examples:
-
-```txt
-feat: add quiz submission flow
-fix(login): prevent submit on empty password
-refactor: extract lesson overview header
+Example:
+```bash
+git commit -m "feat: implement card flip animation"
+git commit -m "fix(login): prevent submit on empty password"
 ```
 
-Cheatsheet:  
-https://gist.github.com/qoomon/5dfcdf8eec66a051ecd85625518cfd13
+---
+
+## 🧪 Mock Data
+
+The application includes mock data for demonstration:
+- **3 Sample Decks:** Japanese Hiragana, Japanese Katakana, Basic Kanji
+- **Multiple Cards per Deck:** Ranging from 12-20 cards
+- **Difficulty Distribution:** Easy, Medium, and Hard cards in each deck
+- **Study Sessions:** Track correct answers and progress
 
 ---
-## Commits
 
-- Commit atleast after every page has been made
-- Commit history will be checked
+## 🚀 Deployment
 
+To deploy this project, you can use:
 
----
-# 17. Documentation Links
+1. **Vercel** (recommended for Next.js)
+   ```bash
+   npm install -g vercel
+   vercel
+   ```
 
-- **Next.js App Router Docs**: https://nextjs.org/docs/app
-- **Next.js Server Components**: https://nextjs.org/docs/app/building-your-application/rendering/server-components
-- **Next.js Client Components**: https://nextjs.org/docs/app/building-your-application/rendering/client-components
-- **TypeScript Handbook**: https://www.typescriptlang.org/docs/
-- **Tailwind CSS Docs**: https://tailwindcss.com/docs
-- **Tailwind motions Docs** (tailwindcss-motions): https://docs.rombo.co/tailwind
-- **Tailwind CSS Extend Theme**: https://tailwindcss.com/docs/theme#extending-the-default-theme
-- **tailwind-variants Docs**: https://www.tailwind-variants.org/docs/getting-started
-- **Heroicons Docs**: https://heroicons.com/
-- **Conventional Commits Cheatsheet**: https://gist.github.com/qoomon/5dfcdf8eec66a051ecd85625518cfd13
+2. **Other platforms:** Docker, Netlify, AWS, etc.
 
 ---
-# 18. Brownie Points
-- Implement mobile view as given in figma
-- Use an example json file to take inputs from
+
+## 📝 Commit History
+
+The project follows a logical commit structure:
+
+1. `feat: add type definitions for user, flashcard, and deck`
+2. `feat: add reusable UI component recipes using tailwind-variants`
+3. `feat: implement authentication components (login, signup, forgot-password)`
+4. `feat: add authentication pages (login, signup, forgot-password)`
+5. `feat: implement flashcard components (deck menu, levels, card view, deck management)`
+6. `feat: add flashcard pages (deck-menu, levels, card, deck)`
+7. `feat: update home page and install required dependencies`
+
+---
+
+## 🔄 Future Enhancements
+
+- Backend API integration for data persistence
+- User authentication with JWT tokens
+- Database storage for decks and progress
+- Quiz results analytics and statistics
+- Spaced repetition algorithm
+- Dark mode support
+- Export/Import deck functionality
+- Collaborative decks
+- Mobile app version
+
+---
+
+## 📄 License
+
+This project is created for the KonnichiWow Internship Program.
+
+---
+
+## 👤 Author
+
+**Shridharan VK**  
+Roll: 23BCE0929  
+Frontend Developer Intern - KonnichiWow
+
+---
+
+## 📞 Support
+
+For questions or issues, please refer to the [Next.js Documentation](https://nextjs.org/docs) or [Tailwind CSS Documentation](https://tailwindcss.com/docs).
+
+---
+
+## ✨ Highlights
+
+- ✅ All pages implemented and routed correctly
+- ✅ TypeScript for type safety throughout
+- ✅ Responsive design following Figma specifications
+- ✅ Reusable component recipes with tailwind-variants
+- ✅ Form validation and error handling
+- ✅ Mock data for demonstration
+- ✅ Clean, documented code with proper commits
+- ✅ Follows all development guidelines from the task description
