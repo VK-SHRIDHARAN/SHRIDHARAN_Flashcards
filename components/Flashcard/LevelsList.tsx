@@ -7,6 +7,7 @@ import Link from 'next/link';
 
 interface LevelsListProps {
   deckId?: string;
+  level?: string;
   onSelectLevel?: (level: Level) => void;
 }
 
@@ -15,24 +16,24 @@ const levels: Level[] = [
     id: 'easy',
     name: 'easy',
     label: 'Easy',
-    description: 'Start with the basics',
-    color: 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200',
+    description: 'Perfect for beginners. Build your foundation with the basics.',
+    color: 'from-emerald-400 to-teal-500',
     cardsCount: 5,
   },
   {
     id: 'medium',
     name: 'medium',
     label: 'Medium',
-    description: 'Challenge yourself',
-    color: 'bg-amber-100 text-amber-700 hover:bg-amber-200',
+    description: 'Challenge yourself. Master intermediate concepts.',
+    color: 'from-amber-400 to-orange-500',
     cardsCount: 8,
   },
   {
     id: 'hard',
     name: 'hard',
     label: 'Hard',
-    description: 'Master the material',
-    color: 'bg-rose-100 text-rose-700 hover:bg-rose-200',
+    description: 'Expert level. Push your limits and achieve mastery.',
+    color: 'from-rose-400 to-red-500',
     cardsCount: 7,
   },
 ];
@@ -46,52 +47,117 @@ export default function LevelsList({ deckId = '1', onSelectLevel }: LevelsListPr
   };
 
   return (
-    <div className="flex min-h-screen flex-col gap-8 bg-gradient-to-br from-slate-50 to-slate-100 px-4 py-8 md:px-8">
-      <div>
-        <Link href="/flashcard/deck-menu" className="mb-4 inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-700">
-          <span>←</span>
-          <span>Back to Decks</span>
-        </Link>
-        <h1 className="text-3xl font-bold text-slate-900 md:text-4xl">Select Difficulty Level</h1>
-        <p className="text-sm text-slate-600 md:text-base">Choose your learning level to get started</p>
+    <div className="flex min-h-screen flex-col gap-8 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 px-4 py-8 md:px-8">
+      {/* Header */}
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-center gap-3">
+          <Link 
+            href="/flashcard/deck-menu" 
+            className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white hover:bg-slate-100 transition-colors shadow-sm"
+          >
+            <span className="text-lg">←</span>
+          </Link>
+          <div>
+            <h1 className="text-3xl font-bold text-slate-900 md:text-4xl">Select Difficulty</h1>
+            <p className="text-sm text-slate-600 md:text-base">Choose your learning challenge level</p>
+          </div>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        {levels.map((level) => (
+      {/* Level Cards */}
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        {levels.map((level, index) => (
           <Link
             key={level.id}
             href={`/flashcard/card?deckId=${deckId}&level=${level.name}`}
-            className={card({ variant: 'interactive' })}
+            className={`group relative overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
             onClick={() => handleSelectLevel(level)}
           >
-            <div className="flex flex-col gap-4">
-              <div className={`rounded-lg p-4 text-center ${level.color}`}>
-                <h3 className="text-2xl font-bold">{level.label}</h3>
+            <div className={`absolute inset-0 bg-gradient-to-br ${level.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
+            
+            <div className={`${card({ variant: 'elevated' })} relative bg-gradient-to-br ${level.color} text-white p-8 h-full flex flex-col gap-4`}>
+              {/* Number Badge */}
+              <div className="flex items-center justify-between">
+                <div className="text-4xl font-bold opacity-20">{String(index + 1).padStart(2, '0')}</div>
+                <div className="text-right">
+                  {level.name === 'easy' && <span className="text-3xl">🌱</span>}
+                  {level.name === 'medium' && <span className="text-3xl">🔥</span>}
+                  {level.name === 'hard' && <span className="text-3xl">⚡</span>}
+                </div>
               </div>
-              <div className="flex flex-col gap-2">
-                <p className="text-sm text-slate-600">{level.description}</p>
-                <span className="text-xs font-medium text-slate-500">
+
+              {/* Title */}
+              <div>
+                <h3 className="text-2xl font-bold mb-1">{level.label}</h3>
+                <p className="text-sm opacity-90">{level.description}</p>
+              </div>
+
+              {/* Card Count */}
+              <div className="mt-auto pt-4 border-t border-white border-opacity-20 flex items-center justify-between">
+                <span className="text-sm font-medium opacity-80">
                   {level.cardsCount} cards available
                 </span>
+                <span className="text-lg group-hover:translate-x-1 transition-transform">→</span>
               </div>
             </div>
           </Link>
         ))}
       </div>
 
-      <div className="flex flex-col gap-4">
-        <h2 className="text-lg font-semibold text-slate-900">All Levels</h2>
-        <div className="flex flex-col gap-2 md:flex-row">
+      {/* Study All Option */}
+      <div className={`${card({ variant: 'default' })} bg-gradient-to-r from-indigo-50 to-blue-50 p-8 border-2 border-dashed border-indigo-300`}>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h3 className="text-lg font-bold text-slate-900 mb-1">Ready for a Real Challenge?</h3>
+            <p className="text-sm text-slate-600">Study all difficulty levels together to maximize your learning.</p>
+          </div>
           <Link
             href={`/flashcard/card?deckId=${deckId}&level=all`}
-            className={button({ variant: 'secondary', size: 'md' })}
+            className={button({ variant: 'primary', size: 'lg' })}
           >
             Study All Levels
           </Link>
-          <Link href="/flashcard/deck-menu" className={button({ variant: 'ghost', size: 'md' })}>
-            Back to Decks
-          </Link>
         </div>
+      </div>
+
+      {/* Tips Section */}
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div className={`${card({ variant: 'default' })} bg-emerald-50 border-l-4 border-emerald-500`}>
+          <div className="flex gap-3">
+            <span className="text-2xl">🌱</span>
+            <div>
+              <h4 className="font-semibold text-slate-900 mb-1">Easy Level</h4>
+              <p className="text-xs text-slate-600">Start here if you're new. Build confidence with fundamental concepts.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className={`${card({ variant: 'default' })} bg-amber-50 border-l-4 border-amber-500`}>
+          <div className="flex gap-3">
+            <span className="text-2xl">🔥</span>
+            <div>
+              <h4 className="font-semibold text-slate-900 mb-1">Medium Level</h4>
+              <p className="text-xs text-slate-600">Intermediate concepts. Strengthen your knowledge and skills.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className={`${card({ variant: 'default' })} bg-rose-50 border-l-4 border-rose-500`}>
+          <div className="flex gap-3">
+            <span className="text-2xl">⚡</span>
+            <div>
+              <h4 className="font-semibold text-slate-900 mb-1">Hard Level</h4>
+              <p className="text-xs text-slate-600">Advanced material. Achieve mastery and deep understanding.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Navigation Footer */}
+      <div className="flex flex-col gap-3 sm:flex-row">
+        <Link href="/flashcard/deck-menu" className={button({ variant: 'secondary', size: 'md' })}>
+          ← Back to Decks
+        </Link>
       </div>
     </div>
   );

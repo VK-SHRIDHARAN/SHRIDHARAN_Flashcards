@@ -1,24 +1,23 @@
-'use client';
-
 import { Suspense } from 'react';
 import CardView from '@/components/Flashcard/CardView';
 
-function CardContent({ searchParams }: { searchParams: { deckId?: string; level?: string } }) {
+type Props = {
+  searchParams: Promise<{ deckId?: string; level?: string }>;
+};
+
+async function CardContent({ searchParams }: { searchParams: Promise<{ deckId?: string; level?: string }> }) {
+  const params = await searchParams;
   return (
     <CardView
-      deckId={searchParams.deckId}
-      level={searchParams.level}
+      deckId={params.deckId}
+      level={params.level}
     />
   );
 }
 
-export default function CardPage({
-  searchParams,
-}: {
-  searchParams: { deckId?: string; level?: string };
-}) {
+export default function CardPage({ searchParams }: Props) {
   return (
-    <Suspense fallback={<div className="flex min-h-screen items-center justify-center">Loading...</div>}>
+    <Suspense fallback={<div className="flex min-h-screen items-center justify-center text-lg font-semibold">Loading flashcards...</div>}>
       <CardContent searchParams={searchParams} />
     </Suspense>
   );
