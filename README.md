@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Flashcards - Interactive Learning Platform
 
 A modern, responsive flashcard application built with Next.js, React, TypeScript, and Tailwind CSS. Perfect for students and learners who want to master new material efficiently.
@@ -363,3 +364,6 @@ For questions or issues, please refer to the [Next.js Documentation](https://nex
 - ✅ Mock data for demonstration
 - ✅ Clean, documented code with proper commits
 - ✅ Follows all development guidelines from the task description
+=======
+# SHRIDHARAN_Flashcards
+>>>>>>> 9fe195b078ae7f9378df78c30b114f7de896f8d0
