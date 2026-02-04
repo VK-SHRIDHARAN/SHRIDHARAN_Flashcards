@@ -3,9 +3,8 @@
 
 A modern, responsive flashcard application built with Next.js, React, TypeScript, and Tailwind CSS. Perfect for students and learners who want to master new material efficiently.
 
-**Author:** Shridharan VK  
-**Internship Task:** KonnichiWow Frontend Developer Internship  
-**Date Completed:** February 4, 2026
+**Author:** Shridharan VK (23BCE2086)  
+**Last Updated:** February 4, 2026
 
 ---
 
@@ -336,15 +335,14 @@ The project follows a logical commit structure:
 
 ## 📄 License
 
-This project is created for the KonnichiWow Internship Program.
+MIT License - Feel free to use this project as a learning resource.
 
 ---
 
 ## 👤 Author
 
 **Shridharan VK**  
-Roll: 23BCE0929  
-Frontend Developer Intern - KonnichiWow
+Roll: 23BCE2086
 
 ---
 
