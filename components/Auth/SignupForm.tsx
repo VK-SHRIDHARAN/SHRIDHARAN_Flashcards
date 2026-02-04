@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { button, input } from '@/ui/index';
 import { SignupData } from '@/lib/types';
 
@@ -9,6 +10,7 @@ interface SignupFormProps {
 }
 
 export default function SignupForm({ onSubmit }: SignupFormProps) {
+  const router = useRouter();
   const [formData, setFormData] = useState<SignupData>({
     name: '',
     email: '',
@@ -17,6 +19,7 @@ export default function SignupForm({ onSubmit }: SignupFormProps) {
   });
   const [errors, setErrors] = useState<Partial<SignupData>>({});
   const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const validateForm = (): boolean => {
     const newErrors: Partial<SignupData> = {};
@@ -75,10 +78,38 @@ export default function SignupForm({ onSubmit }: SignupFormProps) {
       onSubmit?.(formData);
       // Here you would typically send signup request to backend
       console.log('Signup attempt:', formData);
+      setIsSubmitted(true);
+      
+      // Redirect to login after 2 seconds
+      setTimeout(() => {
+        router.push('/login');
+      }, 2000);
     } finally {
       setIsLoading(false);
     }
   };
+
+  if (isSubmitted) {
+    return (
+      <div className="flex w-full max-w-md flex-col gap-6 items-center justify-center">
+        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 animate-bounce">
+          <svg className="h-8 w-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <h2 className="text-2xl font-bold text-slate-900 text-center">Account Created!</h2>
+        <p className="text-center text-sm text-slate-600">
+          Welcome! Your account has been created successfully.
+        </p>
+        <p className="text-center text-xs text-slate-500">
+          Redirecting to login in 2 seconds...
+        </p>
+        <div className="h-1 w-32 bg-slate-200 rounded-full overflow-hidden">
+          <div className="h-full bg-emerald-500 animate-pulse" style={{ animation: 'pulse 2s ease-in-out' }}></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} className="flex w-full max-w-md flex-col gap-6">
@@ -160,7 +191,7 @@ export default function SignupForm({ onSubmit }: SignupFormProps) {
 
       <button
         type="submit"
-        className={button({ variant: 'primary', size: 'md', isDisabled: isLoading })}
+        className={button({ variant: 'primary', size: 'lg', isDisabled: isLoading })}
         disabled={isLoading}
       >
         {isLoading ? 'Creating account...' : 'Sign Up'}

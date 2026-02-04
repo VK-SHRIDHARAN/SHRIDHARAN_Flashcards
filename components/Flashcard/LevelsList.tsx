@@ -155,7 +155,7 @@ export default function LevelsList({ deckId = '1', onSelectLevel }: LevelsListPr
 
       {/* Navigation Footer */}
       <div className="flex flex-col gap-3 sm:flex-row">
-        <Link href="/flashcard/deck-menu" className={button({ variant: 'secondary', size: 'md' })}>
+        <Link href="/flashcard/deck-menu" className={button({ variant: 'secondary', size: 'lg' })}>
           ← Back to Decks
         </Link>
       </div>

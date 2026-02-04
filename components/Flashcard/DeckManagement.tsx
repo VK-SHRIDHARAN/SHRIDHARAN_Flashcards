@@ -171,7 +171,7 @@ export default function DeckManagement({ onSaveDeck }: DeckManagementProps) {
 
           <button
             onClick={handleAddCard}
-            className={button({ variant: 'secondary', size: 'md' })}
+            className={button({ variant: 'secondary', size: 'lg' })}
             disabled={isSaving}
           >
             + Add Card

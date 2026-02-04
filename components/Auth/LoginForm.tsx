@@ -108,7 +108,7 @@ export default function LoginForm({ onSubmit }: LoginFormProps) {
 
       <button
         type="submit"
-        className={button({ variant: 'primary', size: 'md', isDisabled: isLoading })}
+        className={button({ variant: 'primary', size: 'lg', isDisabled: isLoading })}
         disabled={isLoading}
       >
         {isLoading ? 'Logging in...' : 'Login'}

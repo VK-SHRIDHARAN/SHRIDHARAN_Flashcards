@@ -231,14 +231,14 @@ export default function CardView({ deckId = '1', level = 'all' }: CardViewProps)
             <>
               <button
                 onClick={handleCorrect}
-                className={button({ variant: 'primary', size: 'md' })}
+                className={button({ variant: 'primary', size: 'lg' })}
               >
                 ✓ Correct
               </button>
 
               <button
                 onClick={handleSkip}
-                className={button({ variant: 'secondary', size: 'md' })}
+                className={button({ variant: 'secondary', size: 'lg' })}
               >
                 ⊘ Skip
               </button>
@@ -267,12 +267,14 @@ export default function CardView({ deckId = '1', level = 'all' }: CardViewProps)
 
         {/* Finish Button */}
         {isLastCard && (
-          <button
-            onClick={handleFinish}
-            className={button({ variant: 'primary', size: 'lg' })}
-          >
-            🎉 Finish Study Session
-          </button>
+          <div className="w-full max-w-2xl">
+            <button
+              onClick={handleFinish}
+              className={button({ variant: 'primary', size: 'lg' })} 
+            >
+              🎉 Finish Study Session
+            </button>
+          </div>
         )}
 
         {/* Stats Summary */}

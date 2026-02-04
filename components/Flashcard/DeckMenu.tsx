@@ -74,7 +74,7 @@ export default function DeckMenu({ onSelectDeck }: DeckMenuProps) {
           <h1 className="text-3xl font-bold text-slate-900 md:text-4xl">My Decks</h1>
           <p className="text-sm text-slate-600 md:text-base">Select a deck to start learning</p>
         </div>
-        <Link href="/flashcard/deck" className={button({ variant: 'primary', size: 'md' })}>
+        <Link href="/flashcard/deck" className={button({ variant: 'primary', size: 'lg' })}>
           Create Deck
         </Link>
       </div>
@@ -82,7 +82,7 @@ export default function DeckMenu({ onSelectDeck }: DeckMenuProps) {
       {decks.length === 0 ? (
         <div className="flex flex-col items-center justify-center gap-4 rounded-lg border-2 border-dashed border-slate-300 py-12">
           <p className="text-slate-600">No decks found. Create your first deck!</p>
-          <Link href="/flashcard/deck" className={button({ variant: 'primary', size: 'md' })}>
+          <Link href="/flashcard/deck" className={button({ variant: 'primary', size: 'lg' })}>
             Create New Deck
           </Link>
         </div>

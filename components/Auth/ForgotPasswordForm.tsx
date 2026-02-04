@@ -70,7 +70,7 @@ export default function ForgotPasswordForm({ onSubmit }: ForgotPasswordFormProps
             setIsSubmitted(false);
             setEmail('');
           }}
-          className={button({ variant: 'secondary', size: 'md' })}
+          className={button({ variant: 'secondary', size: 'lg' })}
         >
           Back to forgot password
         </button>
@@ -111,7 +111,7 @@ export default function ForgotPasswordForm({ onSubmit }: ForgotPasswordFormProps
 
       <button
         type="submit"
-        className={button({ variant: 'primary', size: 'md', isDisabled: isLoading })}
+        className={button({ variant: 'primary', size: 'lg', isDisabled: isLoading })}
         disabled={isLoading}
       >
         {isLoading ? 'Sending...' : 'Send Reset Link'}
